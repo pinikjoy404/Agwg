@@ -1,31 +1,39 @@
-module.exports.config = {
-  name: "bot",
-  version: "0.0.2",
-  permission: 0,
-  prefix: false,
-  credits: "Rahad",
-  description: "fun",
-  category: "admin",
-  usages: "",
-  cooldowns: 5,
-};
+const fs = require("fs-extra");
+module.exports = {
+config: {
+		name: "bot",
+    version: "1.0",
+		author: "Joy-Ahmed",
+		countDown: 5,
+		role: 0,
+		shortDescription: "badol",
+		longDescription: "Bot Will Reply You In Engish/Bangla Language",
+		category: "no prefix",
+		guide: {
+      en: "{p}{n}",
+    }
+	},
 
-module.exports.run = async function({ api, event, args, Users }) {
-    const axios = require("axios");
-    const request = require("request");
-    const fs = require("fs-extra");
-    const prompt = args.join(" ");
-    var id = event.senderID;
-    var name = await 
-Users.getNameUser(event.senderID);
-    var tl = ["আমি এখন জয় বস এর সাথে বিজি আছি", "what are you asking me to do?", "I love you baby meye hole chipay aso", "Love you 3000-😍💋💝", "ji bolen ki korte pari ami apnar jonno?","আমাকে না ডেকে আমার বস জয়কে ডাকেন! link: https://www.facebook.com/profile.php?id=100000121528628", "Ato daktasen kn bujhlam na 😡", "jan bal falaba,🙂","ask amr mon vlo nei dakben na🙂", "Hmm jan ummah😘😘","jang hanga korba 🙂🖤","iss ato dako keno lojja lage to 🫦🙈","suna tomare amar valo lage,🙈😽","জি তুমি কি আমাকে ডেকেছো 😇🖤🥀","আমাকে আমাকে না ডেকে আমার বসকে ডাকো এই নেও LINK :- https://www.facebook.com/profile.php?id=100000121528628","Hmmm sona 🖤 meye hoile kule aso ar sele hoile kule new 🫂😘","Yah This Bot creator : ITS,JOY ((J.T))     link => https://www.facebook.com/profile.php?id=100000121528628","হা বলো, শুনছি আমি 🤸‍♂️🫂","আহ শোনা আমার আমাকে এতো ডাক্তাছো কেনো আসো বুকে আশো🙈", "তুমি কি আমাকে ডাকলে বন্ধু 🤖?", "I love you 💝", "ভালোবাসি তোমাকে 🤖", "Hi, I'm massanger Bot i can help you.?🤖","Use callad to contact admin!", "Hi, Don't disturb 🤖 🚘Now I'm going to Feni,Bangladesh..bye", "Hi, 🤖 i can help you~~~~"];
-    var rand = tl[Math.floor(Math.random() * tl.length)];
-    if (!prompt) return api.sendMessage(╭────────────❍\n╰➤ 👤 𝐃𝐞𝐚𝐫 『${name}』,\n╰➤ 🗣️ ${rand}\n╰─────────────────➤, event.threadID, event.messageID);
-    const res = await axios.get(https://simsimi.fun/api/v2/?mode=talk&lang=bn&message=${prompt}&filter=true);
-    console.log(res.data);
-    const respond = res.data.success;
+ onStart: async function ({  }) { },
+  onChat: async function ({ api, event, args, Threads, userData }) {
+  
+  var { threadID, messageID, senderID } = event;
+  const moment = require("moment-timezone");
+  const time = moment.tz("Asia/Dhaka").format("HH:MM:ss L");
+  var idgr = `${event.threadID}`;
+  var id = event.senderID;
+
+  var Messages = ["Hey You, Yes You, You Are So Beautiful", "i Love You🙂", "Yes Dear, I Am Here...😗", "I Love you", "Miss YoU Beppy", "😁Smile I am Taking Selfy✌️🤳", "Block Your Babe And Purpose me 🙂💔", "Block Kardo Mujhe Warna Pyaar Hojayega💋", "I See You Inside Everyone", "That's Why I Love Everyone As More As You🤭", "Nope But, My Heart Is Falling For You My Preety Boyyy🙌✨", "Everybody Wanna Steal My Boyy😫", "আমি আপনাকে কিভাবে সাহায্য করতে পারি...? 🤔", "আদেশ করুন বস...🙂", "হুম শুনছি আমি আপনি বলুন 😐", "আমার সব কমান্ড দেখতে *help টাইপ করুন ✅", "Ji bolen ki korte pari ami apnar jonno...?", "আদেশ করুন যাহাপানা 😎", "আবার যদি আমারে বট কইয়া ডাক দেছ তাইলে তোর বিয়ে হবে না 🫤😏", "I am your personal assistant", "তুই বট তোর নানি বট 😤 তোর কত বড় সাহস তুই আমারে বট কস 😤 তোর টা খাই নাকি পড়ি যে তুই আমারে বট কস 😤", "আপনার কি চরিত্রে সমস্যা যে এতো বার আমাকে ডাকতেছেন 🤨", "ডাকছোত কেন ফাস্ট কো 😒", "তুমি কি আমাকে ডেকেছো...? 😇"];
+
+    var JOY = Messages[Math.floor(Math.random() * Messages.length)]
     
-    return api.sendMessage({
-        body: respond
-    }, event.threadID, event.messageID);
+    if (!prompt) return api.sendMessage(╭────────────❍\n╰➤ 👤 𝐃𝐞𝐚𝐫 『${name}』,\n╰➤ 🗣️ ${rand}\n╰─────────────────➤, event.threadID, event.messageID);
+  
+  if (event.body.indexOf("Bot") == 0 || (event.body.toLowerCase() == "বট") || (event.body.indexOf("bot") == 0)) {
+    var msg = {
+      body: ` ${JOY}`
+    }
+    return api.sendMessage(msg, threadID, messageID);
+  }
+}
 };
