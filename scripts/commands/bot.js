@@ -1,39 +1,48 @@
-const fs = require("fs-extra");
-module.exports = {
-config: {
-		name: "bot",
-    version: "1.0",
-		author: "Joy-Ahmed",
-		countDown: 5,
-		role: 0,
-		shortDescription: "badol",
-		longDescription: "Bot Will Reply You In Engish/Bangla Language",
-		category: "no prefix",
-		guide: {
-      en: "{p}{n}",
-    }
-	},
+const axios = require("axios");
 
- onStart: async function ({  }) { },
-  onChat: async function ({ api, event, args, Threads, userData }) {
-  
-  var { threadID, messageID, senderID } = event;
-  const moment = require("moment-timezone");
-  const time = moment.tz("Asia/Dhaka").format("HH:MM:ss L");
-  var idgr = `${event.threadID}`;
-  var id = event.senderID;
-
-  var Messages = ["Hey You, Yes You, You Are So Beautiful", "i Love You🙂", "Yes Dear, I Am Here...😗", "I Love you", "Miss YoU Beppy", "😁Smile I am Taking Selfy✌️🤳", "Block Your Babe And Purpose me 🙂💔", "Block Kardo Mujhe Warna Pyaar Hojayega💋", "I See You Inside Everyone", "That's Why I Love Everyone As More As You🤭", "Nope But, My Heart Is Falling For You My Preety Boyyy🙌✨", "Everybody Wanna Steal My Boyy😫", "আমি আপনাকে কিভাবে সাহায্য করতে পারি...? 🤔", "আদেশ করুন বস...🙂", "হুম শুনছি আমি আপনি বলুন 😐", "আমার সব কমান্ড দেখতে *help টাইপ করুন ✅", "Ji bolen ki korte pari ami apnar jonno...?", "আদেশ করুন যাহাপানা 😎", "আবার যদি আমারে বট কইয়া ডাক দেছ তাইলে তোর বিয়ে হবে না 🫤😏", "I am your personal assistant", "তুই বট তোর নানি বট 😤 তোর কত বড় সাহস তুই আমারে বট কস 😤 তোর টা খাই নাকি পড়ি যে তুই আমারে বট কস 😤", "আপনার কি চরিত্রে সমস্যা যে এতো বার আমাকে ডাকতেছেন 🤨", "ডাকছোত কেন ফাস্ট কো 😒", "তুমি কি আমাকে ডেকেছো...? 😇"];
-
-    var JOY = Messages[Math.floor(Math.random() * Messages.length)]
-    
-    if (!prompt) return api.sendMessage(╭────────────❍\n╰➤ 👤 𝐃𝐞𝐚𝐫 『${name}』,\n╰➤ 🗣️ ${rand}\n╰─────────────────➤, event.threadID, event.messageID);
-  
-  if (event.body.indexOf("Bot") == 0 || (event.body.toLowerCase() == "বট") || (event.body.indexOf("bot") == 0)) {
-    var msg = {
-      body: ` ${JOY}`
-    }
-    return api.sendMessage(msg, threadID, messageID);
-  }
-}
+module.exports.config = {
+  name: "bot",
+  version: "1.0.0",
+  permission: 0,
+  credits: "Joy-Ahmed",
+  description: "Talk to Ana",
+  prefix: true, 
+  category: "sim simi fun", 
+  usages: "bot",
+  cooldowns: 5,
+  dependencies: {}
 };
+
+module.exports.handleEvent = async function ({ api, event }) {
+    if (!(event.body.indexOf("bot") === 0 || event.body.indexOf("বট") === 0)) return;
+    const args = event.body.split(/\s+/);
+    args.shift();
+
+    let { messageID, threadID, senderID, body } = event;
+    let tid = threadID,
+        mid = messageID;
+    const content = encodeURIComponent(args.join(" "));
+    if (!args[0]) return api.sendMessage(" hm bolo bby😸 ...", tid, mid);
+    try {
+        const res = await axios.get(`https://raw.githubusercontent.com/Blankid018/D1PT0/main/baseApiUrl.json`);
+        const respond = res.data.success;
+        if (res.data.error) {
+            api.sendMessage(`Error: ${res.data.error}`, tid, (error, info) => {
+                if (error) {
+                    console.error(error);
+                }
+            }, mid);
+        } else {
+            api.sendMessage(respond, tid, (error, info) => {
+                if (error) {
+                    console.error(error);
+                }
+            }, mid);
+        }
+    } catch (error) {
+        console.error(error);
+        api.sendMessage("🤖 𝙰𝚗 𝚎𝚛𝚛𝚘𝚛 𝚘𝚌𝚌𝚞𝚛𝚎𝚍 𝚠𝚑𝚒𝚕𝚎 𝚐𝚎𝚝𝚝𝚒𝚗𝚐 𝙳𝚊𝚝𝚊𝚋𝚊𝚜𝚎, 𝚜𝚘𝚛𝚛𝚢 𝚋𝚊𝚋𝚎 🥺", tid, mid);
+    }
+};
+
+module.exports.run = async function ({ api, event }) {};
