@@ -2,9 +2,12 @@ module.exports.config = {
   name: "join",
   eventType: ['log:subscribe'],
   version: "1.0.0",
-  credits: "Mirai-Team", // FIXED BY JOy
+  credits: "Mirai-Team", // FIXED BY YAN JOY
   description: "GROUP UPDATE NOTIFICATION"
 };
+
+const ADMIN = 'MD JUBAED AHMED JOY';
+const FB_LINK = 'https://www.facebook.com/profile.php?id=100000121528628';
 
 const fs = require('fs-extra');
 const { loadImage, createCanvas, registerFont } = require("canvas");
@@ -12,7 +15,7 @@ const request = require('request');
 //const { join } = require('path');
 const axios = require('axios');
 const jimp = require("jimp")
-const fontlink = 'https://drive.google.com/u/0/uc?id=10XFWm9F6u2RKnuVIfwoEdlav2HhkAUIB&export=download'
+const fontlink = 'https://drive.google.com/u/0/uc?id=1ZwFqYB-x6S9MjPfYm3t3SP1joohGl4iw&export=download'
 let PRFX = `${global.config.PREFIX}`;
 
 module.exports.circle = async (image) => {
@@ -28,7 +31,7 @@ module.exports.run = async function({ api, event, Users }) {
   var getHours = await global.client.getTime("hours");
   var session = `${getHours < 3 ? "midnight" : getHours < 8 ? "Early morning" : getHours < 12 ? "noon" : getHours < 17 ? "afternoon" : getHours < 23 ? "evening" : "midnight"}`
   const moment = require("moment-timezone");
-  var thu = moment.tz('Asia/dhaka').format('dddd');
+  var thu = moment.tz('Asia/Manila').format('dddd');
   if (thu == 'Sunday') thu = 'Sunday'
   if (thu == 'Monday') thu = 'Monday'
   if (thu == 'Tuesday') thu = 'Tuesday'
@@ -36,8 +39,8 @@ module.exports.run = async function({ api, event, Users }) {
   if (thu == "Thursday") thu = 'Thursday'
   if (thu == 'Friday') thu = 'Friday'
   if (thu == 'Saturday') thu = 'Saturday'
-  const time = moment.tz("Asia/dhaka").format("HH:mm:ss - DD/MM/YYYY");
-  const hours = moment.tz("Asia/dhaka").format("HH");
+  const time = moment.tz("Asia/Manila").format("HH:mm:ss - DD/MM/YYYY");
+  const hours = moment.tz("Asia/Manila").format("HH");
   const { commands } = global.client;
   const { threadID } = event;
   let threadInfo = await api.getThreadInfo(event.threadID);
@@ -47,44 +50,24 @@ module.exports.run = async function({ api, event, Users }) {
   }
   if (event.logMessageData.addedParticipants && Array.isArray(event.logMessageData.addedParticipants) && event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
     //api.changeNickname(`𝗕𝗢𝗧 ${(!global.config.BOTNAME) ? "Buddy" : global.config.BOTNAME}`, threadID, api.getCurrentUserID());
-
+    
     let gifUrl = 'https://i.imgur.com/AErzMnN.jpeg';
-let gifPath = __dirname + '/Nayan/join/join.gif';
+let gifPath = __dirname + '/Joy/join/join.gif';
 
 axios.get(gifUrl, { responseType: 'arraybuffer' })
 .then(response => {
     fs.writeFileSync(gifPath, response.data);
-  if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
-    api.changeNickname(`[ ${global.config.PREFIX} ] • ➠${(!global.config.BOTNAME) ? "bot" : global.config.BOTNAME}`, threadID, api.getCurrentUserID());
-    return api.sendMessage("চলে এসেছি আমি পিচ্চি জয় তোমাদের মাঝে🤭!", event.threadID, () => api.sendMessage({ body: `${global.config.BOTNAME} CONNECTED«\n\nAssalamualaykum☘️
-<------------------------------>  
-BOT CONNECTED SUCCESFUL !!! 
-
-APPROVAL ALLOW IN THIS GROUP!!!
-<------------------------------>\n\nTO VIEW ANY COMMAND Use👉${global.config.PREFIX}help\nSee command👉 ${global.config.PREFIX}command
-\n\EXAMPLE:👇\n${global.config.PREFIX}admin (information)\n${global.config.PREFIX}islam (video)\n${global.config.PREFIX}tik (link)\n${global.config.PREFIX}fbvideo (link)
-<------------------------------>
-AND FOR ANY COMPLAINTS OR CONTACT BOT OPERATOR 
-
-DEVELOPER :MD JUBAED AHMED JOY
-
-🟣Facebook Account Link: 
-
-https://www.facebook.com/profile.php?id=100000121528628
-
-🔵WHATSAPP NUMBER: wa.me/+8801709045888
-
-🟢SUPPORT EMAIL: www.joyahmedtt@gmail.com`, attachment: fs.createReadStream(gifPath)}, threadID));
-  }})
+    return api.sendMessage("Hey There!", event.threadID, () => api.sendMessage({ body: `✅ Group Connection in ${threadName} at ${session} success! \n\n➭ Current Commands: ${commands.size}\n➭ Bot Prefix: ${global.config.PREFIX}\n➭ Version: ${global.config.version}\n➭ Admin: ‹${ADMIN}›\n➭ Facebook: ‹${FB_LINK}›\n➭ Use ${PRFX}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`, attachment: fs.createReadStream(gifPath)}, threadID));
+})
 .catch(error => {
     console.error(error);
 });
   }
   else {
     try {
-      if (!fs.existsSync(__dirname + `/Nayan/font/Semi.ttf`)) {
+      if (!fs.existsSync(__dirname + `/Joy/font/Semi.ttf`)) {
         let getfont = (await axios.get(fontlink, { responseType: "arraybuffer" })).data;
-        fs.writeFileSync(__dirname + `/Nayan/font/Semi.ttf`, Buffer.from(getfont, "utf-8"));
+        fs.writeFileSync(__dirname + `/Joy/font/Semi.ttf`, Buffer.from(getfont, "utf-8"));
       };
       const { createReadStream, existsSync, mkdirSync, readdirSync } = global.nodemodule["fs-extra"];
       let { threadName, participantIDs } = await api.getThreadInfo(threadID);
@@ -101,8 +84,8 @@ https://www.facebook.com/profile.php?id=100000121528628
       // console.log(event.logMessageData.addedParticipants)
       var id = [];
       for (let o = 0; o < event.logMessageData.addedParticipants.length; o++) {
-        let pathImg = __dirname + `/Nayan/join/${o}.png`;
-        let pathAva = __dirname + `/Nayan/join/avt.png`;
+        let pathImg = __dirname + `/Joy/join/${o}.png`;
+        let pathAva = __dirname + `/Joy/join/avt.png`;
         let avtAnime = (await axios.get(encodeURI(
           `https://graph.facebook.com/${event.logMessageData.addedParticipants[o].userFbId}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`), { responseType: "arraybuffer" })).data;
         var ok = [
@@ -118,7 +101,7 @@ https://www.facebook.com/profile.php?id=100000121528628
         var avatar = await this.circle(pathAva);
         let baseImage = await loadImage(pathImg);
         let baseAva = await loadImage(avatar);
-        registerFont(__dirname + `/Nayan/font/Semi.ttf`, {
+        registerFont(__dirname + `/Joy/font/Semi.ttf`, {
           family: "Semi"
         });
         let canvas = createCanvas(1902, 1082);
@@ -160,10 +143,10 @@ https://www.facebook.com/profile.php?id=100000121528628
         ctx.restore();
         const imageBuffer = canvas.toBuffer();
         fs.writeFileSync(pathImg, imageBuffer);
-        abx.push(fs.createReadStream(__dirname + `/Nayan/join/${o}.png`))
+        abx.push(fs.createReadStream(__dirname + `/Joy/join/${o}.png`))
       }
       memLength.sort((a, b) => a - b);
-      (typeof threadData.customJoin == "undefined") ? msg = `"╔════•|      ✿      |•════╗\n 💐আ্ঁস্ঁসা্ঁলা্ঁমু্ঁ💚আ্ঁলা্ঁই্ঁকু্ঁম্ঁ💐\n╚════•|      ✿      |•════╝\n\n    ✨🆆🅴🅻🅻 🅲🅾🅼🅴✨\n\n                 ❥𝐍𝐄𝐖~\n\n        ~🇲‌🇪‌🇲‌🇧‌🇪‌🇷‌~\n\n             [   {name} ]\n\n༄✺আ্ঁপ্ঁনা্ঁকে্ঁ আ্ঁমা্ঁদে্ঁর্ঁ✺࿐\n\n{threadName}\n\n 🥰🖤🌸—এ্ঁর্ঁ প্ঁক্ষ্ঁ🍀থে্ঁকে্ঁ🍀—🌸🥀\n\n         🥀_ভা্ঁলো্ঁবা্ঁসা্ঁ_অ্ঁভি্ঁরা্ঁম্ঁ_🥀\n\n༄✺আঁপঁনিঁ এঁইঁ গ্রুঁপেঁর {soThanhVien} নঁং মে্ঁম্বা্ঁরঁ ࿐\n\n    ╔╦══•    •✠•❀•✠ •   •══╦╗\n        ♥  𝐁𝐎𝐓'𝐬 𝐎𝐖𝐍𝐄𝐑♥\n\n                           ☟                     \n\n     𝗠𝗗 𝗝𝗨𝗕𝗔𝗘𝗗 𝗔𝗛𝗠𝗘𝗗 𝗝𝗢𝗬\n    ╚╩══•    •✠•❀•✠ •    •══╩╝` : msg = threadData.customJoin;
+      (typeof threadData.customJoin == "undefined") ? msg = `🌟 Welcome new member {name} to the group {threadName}\n→ URL Profile:\nhttps://www.facebook.com/profile.php?id={iduser}\n→ {type} are the group's {soThanhVien}${suffix} member\n→ Added to the group by: {author}\n→ Added by facebook link: https://www.facebook.com/profile.php?id={uidAuthor}\n─────────────────\n[ {time} - {thu} ]` : msg = threadData.customJoin;
       var nameAuthor = await Users.getNameUser(event.author)
       msg = msg
         .replace(/\{iduser}/g, iduser.join(', '))
@@ -180,7 +163,7 @@ https://www.facebook.com/profile.php?id=100000121528628
       var formPush = { body: msg, attachment: abx, mentions }
       api.sendMessage(formPush, threadID);
       for (let ii = 0; ii < parseInt(id.length); ii++) {
-        fs.unlinkSync(__dirname + `/Nayan/join/${ii}.png`)
+        fs.unlinkSync(__dirname + `/Joy/join/${ii}.png`)
       }
     } catch (e) { return console.log(e) };
   }
