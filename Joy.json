@@ -9,7 +9,7 @@
   "saveState": true,
   "banMsg": false,
   "adminOnlyMsg": false,
-  "BOTNAME": "Joy-bot",
+  "BOTNAME": "Joy-Bot",
   "PREFIX": ".",
   "OPERATOR": [
     "61568646922201",
